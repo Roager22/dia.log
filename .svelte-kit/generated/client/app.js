@@ -10,7 +10,8 @@ export const nodes = [
 export const server_loads = [];
 
 export const dictionary = {
-		"/areas": [3,[2]]
+		"/": [2],
+		"/areas": [3]
 	};
 
 export const hooks = {

@@ -69,7 +69,8 @@ export async function getAreas() {
       title,
       description,
       "icon": icon.asset->url,
-      bulletPoints
+      workMethods,
+      techniques
     }`)
   } catch (error) {
     console.error('Error fetching areas:', error)

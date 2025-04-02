@@ -17,9 +17,8 @@
   });
 </script>
 
-<section class="container mx-auto px-4 py-20">
-  <h2 class="text-4xl md:text-5xl font-heading font-bold text-primary text-center mb-16">Обо мне</h2>
-  <div class="flex flex-col md:flex-row items-center gap-12">
+<section id="specialist-about" class="py-20 relative overflow-hidden scroll-mt-20" style="background-color: #f4d9d9;">
+  <div class="container mx-auto px-4">
     {#if loading}
       <div class="text-center w-full">
         <p class="text-gray-600">Загрузка информации...</p>
@@ -29,25 +28,32 @@
         <p>Произошла ошибка при загрузке информации</p>
       </div>
     {:else if specialist}
-      <div class="flex-1 flex justify-center items-center">
-        <img 
-          src={specialist.photo} 
-          alt={specialist.name} 
-          class="w-full max-w-lg h-auto rounded-2xl shadow-lg" 
-        />
-      </div>
-      <div class="flex-1 text-center md:text-left">
-        <h2 class="text-3xl font-bold text-primary mb-6">{specialist.name}</h2>
-        <p class="text-lg text-gray-700 mb-6">{specialist.description}</p>
-        <div class="space-y-2">
-          {#each specialist.qualifications as qualification}
-            <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
-              <span class="text-gray-700">{qualification}</span>
+      <div class="flex flex-col md:flex-row items-start gap-12 max-w-6xl mx-auto">
+        <!-- Photo -->
+        <div class="md:w-5/12 lg:w-4/12">
+          <img 
+            src={specialist.photo} 
+            alt={specialist.name} 
+            class="w-full rounded-2xl shadow-lg" 
+          />
+        </div>
+        
+        <!-- Content -->
+        <div class="md:w-7/12 lg:w-8/12">
+          <div class="bg-white p-8 rounded-xl shadow-sm">
+            <h3 class="text-2xl font-bold text-primary mb-4">{specialist.name}</h3>
+            
+            <p class="text-gray-700 mb-8">{specialist.description}</p>
+            
+            <div class="space-y-3">
+              {#each specialist.qualifications as qualification}
+                <div class="flex items-center gap-3">
+                  <div class="w-4 h-4 rounded-full bg-secondary/30 flex-shrink-0"></div>
+                  <span class="text-gray-700">{qualification}</span>
+                </div>
+              {/each}
             </div>
-          {/each}
+          </div>
         </div>
       </div>
     {/if}
