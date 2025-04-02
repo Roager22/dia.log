@@ -1,5 +1,5 @@
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-vercel';
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -8,7 +8,7 @@ export default {
   preprocess: vitePreprocess(),
 
   kit: {
-    // adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapters for more info
+    // Заменяем adapter-auto на adapter-vercel
     adapter: adapter(),
     
     // Enable SvelteKit's routing system

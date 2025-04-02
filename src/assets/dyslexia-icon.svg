@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect x="20" y="30" width="60" height="40" fill="#f0f0f0" stroke="#6b7280" stroke-width="2" rx="5"/>
+  <text x="30" y="50" font-family="Arial" font-size="12" fill="#4b5563">б</text>
+  <text x="45" y="50" font-family="Arial" font-size="12" fill="#4b5563" transform="scale(-1, 1) translate(-90, 0)">д</text>
+  <text x="60" y="50" font-family="Arial" font-size="12" fill="#4b5563">п</text>
+  <text x="30" y="65" font-family="Arial" font-size="12" fill="#4b5563" transform="rotate(180, 35, 65)">и</text>
+  <text x="45" y="65" font-family="Arial" font-size="12" fill="#4b5563">т</text>
+  <text x="60" y="65" font-family="Arial" font-size="12" fill="#4b5563" transform="rotate(-15, 60, 65)">а</text>
+</svg>

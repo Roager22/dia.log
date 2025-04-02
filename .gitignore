@@ -23,8 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Игнорировать всё
-*
-
-# Исключить только studio-dia.log
-!/studio-dia.log
+# SvelteKit specific
+.svelte-kit/
+build/
+.env
+.env.*
+!.env.example

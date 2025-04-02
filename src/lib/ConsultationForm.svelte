@@ -12,9 +12,9 @@
   };
 </script>
 
-<section id="consultation" class="py-20 bg-white scroll-mt-20 relative overflow-hidden">
+<section id="consultation" class="py-20 scroll-mt-20 relative overflow-hidden" style="background-color: #f4d9d9;">
   <!-- Декоративные элементы фона -->
-  <div class="absolute top-0 right-0 w-1/3 h-64 opacity-10 pointer-events-none">
+  <div class="absolute top-0 right-0 w-1/3 h-64 opacity-20 pointer-events-none">
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <path fill="#f8b8c4" d="M42.8,-65.2C54.9,-56.3,63.7,-42.8,69.2,-28.2C74.8,-13.6,77.1,2.1,73.6,16.2C70.1,30.4,60.8,43,48.9,53.1C37,63.2,22.4,70.8,6.2,73.1C-10,75.4,-27.9,72.4,-41.7,63.5C-55.5,54.6,-65.2,39.8,-70.3,23.7C-75.4,7.6,-75.9,-9.8,-70.2,-24.8C-64.5,-39.8,-52.6,-52.3,-39.1,-60.7C-25.6,-69.1,-10.6,-73.4,3.1,-73.1C16.8,-72.8,30.7,-74.1,42.8,-65.2Z" transform="translate(100 100)" />
     </svg>

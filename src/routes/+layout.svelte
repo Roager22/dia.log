@@ -1,0 +1,318 @@
+<script>
+  import '../app.css';
+  import { onMount, afterUpdate } from 'svelte';
+
+  
+  let phoneNumber = "+7(981)801-44-94";
+  let mobileMenuOpen = false;
+  
+  function toggleMobileMenu() {
+    mobileMenuOpen = !mobileMenuOpen;
+  }
+  
+  // Полностью переработанная функция для обработки якорных ссылок
+  function handleAnchorClick(e) {
+    const href = e.currentTarget.getAttribute('href');
+    
+    if (!href) return;
+    
+    // Обработка якорных ссылок на главной странице
+    if (href.startsWith('/#')) {
+      e.preventDefault();
+      
+      // Если мы уже на главной странице
+      if (window.location.pathname === '/') {
+        const id = href.substring(2); // Убираем '/#'
+        scrollToElement(id);
+      } else {
+        // Если мы на другой странице, сохраняем якорь в sessionStorage и перенаправляем
+        sessionStorage.setItem('scrollTarget', href.substring(2));
+        window.location.href = '/';
+      }
+      
+      // Закрываем мобильное меню при клике
+      if (mobileMenuOpen) {
+        mobileMenuOpen = false;
+      }
+    }
+  }
+  
+  // Выделяем функцию скролла в отдельный метод
+  function scrollToElement(id) {
+    const element = document.getElementById(id);
+    
+    if (element) {
+      setTimeout(() => {
+        const headerOffset = 80; // Высота хедера
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  }
+  
+  // Обработка якорей при загрузке страницы
+  onMount(() => {
+    // Проверяем, есть ли сохраненный якорь в sessionStorage
+    const scrollTarget = sessionStorage.getItem('scrollTarget');
+    
+    if (scrollTarget) {
+      // Удаляем сохраненный якорь
+      sessionStorage.removeItem('scrollTarget');
+      scrollToElement(scrollTarget);
+    } else if (window.location.hash) {
+      // Если есть хэш в URL
+      scrollToElement(window.location.hash.substring(1));
+    }
+  });
+</script>
+
+<svelte:head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Using the updated color scheme */
+      --color-primary: #607e4c;
+      --color-primary-dark: #4f6a3c;
+      --color-primary-darker: #3e4c38;
+      --color-secondary: #fbced2;
+      --color-secondary-light: #f5e7dc;
+    }
+    
+    .bg-secondary-light {
+      background-color: var(--color-secondary-light);
+    }
+    
+    .bg-secondary {
+      background-color: var(--color-secondary);
+    }
+    
+    .text-secondary {
+      color: var(--color-secondary);
+    }
+    
+    #services, #testimonials {
+      background-color: var(--color-secondary-light);
+    }
+    
+    #testimonials .testimonial-card {
+      border-left: 4px solid var(--color-secondary);
+    }
+  </style>
+</svelte:head>
+
+<main class="min-h-screen bg-gradient-to-b from-green-50 to-white font-sans overflow-hidden relative">
+  <!-- Abstract wave decoration - top right -->
+  <div class="absolute top-0 right-0 w-1/3 h-64 opacity-20 pointer-events-none">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#f8b8c4" d="M42.8,-65.2C54.9,-56.3,63.7,-42.8,69.2,-28.2C74.8,-13.6,77.1,2.1,73.6,16.2C70.1,30.4,60.8,43,48.9,53.1C37,63.2,22.4,70.8,6.2,73.1C-10,75.4,-27.9,72.4,-41.7,63.5C-55.5,54.6,-65.2,39.8,-70.3,23.7C-75.4,7.6,-75.9,-9.8,-70.2,-24.8C-64.5,-39.8,-52.6,-52.3,-39.1,-60.7C-25.6,-69.1,-10.6,-73.4,3.1,-73.1C16.8,-72.8,30.7,-74.1,42.8,-65.2Z" transform="translate(100 100)" />
+    </svg>
+  </div>
+  
+  <!-- Abstract wave decoration - bottom left -->
+  <div class="absolute bottom-0 left-0 w-1/3 h-64 opacity-20 pointer-events-none">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#5d7c4e" d="M47.7,-73.2C62.1,-67.3,74.5,-54.9,79.8,-40.1C85.2,-25.3,83.5,-8.1,79.9,8C76.3,24.1,70.8,39.1,60.8,50.5C50.8,61.9,36.3,69.7,21.2,73.9C6.1,78.1,-9.6,78.7,-24.8,74.8C-40,70.9,-54.7,62.5,-65.4,50.1C-76.1,37.7,-82.8,21.4,-83.9,4.7C-85,-12.1,-80.5,-29.3,-70.8,-42.3C-61.1,-55.3,-46.2,-64.1,-31.6,-69.8C-17,-75.5,-2.7,-78.1,10.8,-77.1C24.3,-76.1,33.3,-79.1,47.7,-73.2Z" transform="translate(100 100)" />
+    </svg>
+  </div>
+
+  <header class="sticky top-0 bg-white/95 backdrop-blur-sm shadow-md z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/logo.svg" alt="Логотип" class="h-10 w-auto hover:scale-105 transition-transform" />
+          <span class="text-primary font-heading font-bold text-2xl">Dia.log</span>
+        </a>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8">
+        <nav class="flex items-center gap-6">
+          <a href="/#about" on:click={handleAnchorClick} class="font-medium text-gray-700 hover:text-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary hover:after:w-full after:transition-all">Обо мне</a>
+          <a href="/areas" class="font-medium text-gray-700 hover:text-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary hover:after:w-full after:transition-all">Направления</a>
+          <a href="/#stages" on:click={handleAnchorClick} class="font-medium text-gray-700 hover:text-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary hover:after:w-full after:transition-all">Этапы работы</a>
+          <a href="/#testimonials" on:click={handleAnchorClick} class="font-medium text-gray-700 hover:text-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary hover:after:w-full after:transition-all">Отзывы</a>
+        </nav>
+        <a href={`tel:${phoneNumber}`} class="font-medium text-gray-700 hover:text-primary transition-colors">
+          {phoneNumber}
+        </a>
+        <a href="/#consultation" on:click={handleAnchorClick} class="font-medium bg-primary text-white px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-green-200 transition-all duration-300 transform hover:-translate-y-0.5 hover:bg-[#4f6a3c]">
+          Записаться на консультацию
+        </a>
+      </div>
+      
+      <button class="md:hidden text-primary p-2" on:click={toggleMobileMenu}>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+    
+    {#if mobileMenuOpen}
+      <div class="md:hidden bg-white border-t border-gray-100 py-4 px-4 animate-fadeIn">
+        <nav class="flex flex-col space-y-4">
+          <a href="/#about" on:click={handleAnchorClick} class="font-medium text-gray-700 hover:text-primary transition-colors py-2">Обо мне</a>
+          <a href="/areas" class="font-medium text-gray-700 hover:text-primary transition-colors py-2">Направления</a>
+          <a href="/#stages" on:click={handleAnchorClick} class="font-medium text-gray-700 hover:text-primary transition-colors py-2">Этапы работы</a>
+          <a href="/#testimonials" on:click={handleAnchorClick} class="font-medium text-gray-700 hover:text-primary transition-colors py-2">Отзывы</a>
+          <a href={`tel:${phoneNumber}`} class="font-medium text-gray-700 hover:text-primary transition-colors py-2">
+            {phoneNumber}
+          </a>
+          <a href="/#consultation" on:click={handleAnchorClick} class="font-medium bg-primary text-white px-6 py-2.5 rounded-full text-center mt-2 hover:bg-[#4f6a3c]">
+            Записаться на консультацию
+          </a>
+        </nav>
+      </div>
+    {/if}
+  </header>
+
+  <slot />
+
+  <!-- Speech bubble decorations for footer -->
+  <div class="absolute bottom-40 right-10 w-16 h-16 opacity-10 pointer-events-none">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22Z" fill="#5d7c4e"/>
+    </svg>
+  </div>
+  
+  <div class="absolute bottom-60 right-20 w-10 h-10 opacity-10 pointer-events-none">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22Z" fill="#f8b8c4"/>
+    </svg>
+  </div>
+
+  <footer class="bg-gradient-to-b from-white to-green-50 border-t border-green-100 mt-16 relative">
+    <div class="container mx-auto px-4 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div class="space-y-5">
+          <div class="flex items-center gap-3">
+            <img src="/logo.svg" alt="Логотип" class="h-10 w-auto" />
+            <span class="text-primary font-heading font-bold text-xl">Dia.log</span>
+          </div>
+          <p class="text-gray-600 leading-relaxed">Профессиональная помощь в развитии речи вашего ребёнка</p>
+        </div>
+
+        <div class="space-y-5">
+          <h3 class="font-heading font-semibold text-gray-900 text-lg">Контакты</h3>
+          <div class="space-y-3">
+            <a href={`tel:${phoneNumber}`} class="block text-gray-600 hover:text-primary transition-colors">{phoneNumber}</a>
+            <a href="mailto:Dia.log1@mail.ru" class="block text-gray-600 hover:text-primary transition-colors">Dia.log1@mail.ru</a>
+            <p class="text-gray-600">Санкт-Петербург, пока адрес не пишем, мошенники не узнают</p>
+          </div>
+        </div>
+
+        <div class="space-y-5">
+          <h3 class="font-heading font-semibold text-gray-900 text-lg">Услуги</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-600 hover:text-primary transition-colors">Консультация</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-primary transition-colors">Диагностика</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-primary transition-colors">Коррекция речи</a></li>
+            <li><a href="#" class="text-gray-600 hover:text-primary transition-colors">Развитие речи</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-5">
+          <h3 class="font-heading font-semibold text-gray-900 text-lg">Мы в соцсетях</h3>
+          <div class="flex space-x-5">
+            <a href="#" class="text-gray-600 hover:text-[#5d7c4e] transition-colors transform hover:scale-110">
+              <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-600 hover:text-[#5d7c4e] transition-colors transform hover:scale-110">
+              <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-600 hover:text-[#5d7c4e] transition-colors transform hover:scale-110">
+              <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 pt-8 border-t border-green-100 text-center text-gray-600">
+        <p>© 2024 Dia.log. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<style>
+  :global(body) {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  :global(h1, h2, h3, h4, h5, h6) {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  /* Background patterns */
+  :global(#services) {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  :global(#services::before) {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background-image: radial-gradient(circle, rgba(248, 184, 196, 0.2) 10%, transparent 10.5%);
+    background-size: 20px 20px;
+    z-index: 0;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  :global(#testimonials) {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  :global(#testimonials::after) {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+    background-image: radial-gradient(circle, rgba(93, 124, 78, 0.2) 10%, transparent 10.5%);
+    background-size: 20px 20px;
+    z-index: 0;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  :global(#stages) {
+    position: relative;
+  }
+  
+  :global(#stages::before) {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--color-secondary), var(--color-secondary) 5px, transparent 5px, transparent 15px);
+    opacity: 0.3;
+    z-index: 0;
+  }
+</style>
