@@ -3,7 +3,7 @@
   import { onMount, afterUpdate } from 'svelte';
 
   
-  let phoneNumber = "+7(981)801-44-94";
+  let phoneNumber = "+79818014494";
   let mobileMenuOpen = false;
   
   function toggleMobileMenu() {
@@ -72,6 +72,7 @@
 </script>
 
 <svelte:head>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -124,7 +125,7 @@
     <div class="container mx-auto px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <a href="/" class="flex items-center gap-3">
-          <img src="/logo.svg" alt="Логотип" class="h-10 w-auto hover:scale-105 transition-transform" />
+          <img src="/logo.jpg" alt="Логотип" class="h-10 w-auto hover:scale-105 transition-transform" />
           <span class="text-primary font-heading font-bold text-2xl">Dia.log</span>
         </a>
       </div>
@@ -199,7 +200,7 @@
           <h3 class="font-heading font-semibold text-gray-900 text-lg">Контакты</h3>
           <div class="space-y-3">
             <a href={`tel:${phoneNumber}`} class="block text-gray-600 hover:text-primary transition-colors">{phoneNumber}</a>
-            <a href="mailto:Dia.log1@mail.ru" class="block text-gray-600 hover:text-primary transition-colors">Dia.log1@mail.ru</a>
+            <a href="mailto:dianka.reshchikova@mail.ru" class="block text-gray-600 hover:text-primary transition-colors">dianka.reshchikova@mail.ru</a>
             <p class="text-gray-600">Санкт-Петербург, пока адрес не пишем, мошенники не узнают</p>
           </div>
         </div>
